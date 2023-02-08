@@ -1,0 +1,60 @@
+{% extends 'phrasal_verbs/base.html' %}
+
+{% block content %}
+<div class="container text-center">
+    <h1>Phrasal Verbs</h1>
+</div>
+
+{% if phrasal_verbs.length != 0 %}
+<div class="container">
+    <div id="contenedorCartas" class="container text-center">
+        <div class="row">
+            {% for p in phrasal_verbs %}
+            <div class="col-4">
+                <div class="flip-container">
+                    <div class="card">
+                      <div class="front">
+                        <br>
+                        <p><strong>{{p.verb | capfirst}}</strong></p>
+                      </div>
+                      <div class="back">
+                        <p><strong>{{p.traduction | capfirst}}</strong></p>
+                        <br>
+                        <p>{{p.example | capfirst}}</p>
+                        
+                        <button type="button" onclick="enlaceWR('{{ p.verb }}');" class="btn btn-outline-success">WordReference</button>
+                      </div>
+                    </div>
+                  </div> 
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>  
+    
+    
+</div>
+
+<script>
+    $(function(){
+        $('#popup').hide();
+    });
+
+    function mostrar_mensaje(){
+        $('#contenedorCartas').hide();
+        $('#popup').show();
+    }
+
+    function ocultarPopup(){
+        $('#contenedorCartas').show();
+        $('#popup').hide();
+    }
+
+    function enlaceWR(verb) {
+        var cleanedVar = verb.replace(" ", "%20");
+        window.open("https://www.wordreference.com/es/translation.asp?tranword="+cleanedVar, "_blank");
+        
+    }
+</script>
+{% endif %}
+{% endblock %}
